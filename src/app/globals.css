@@ -3,33 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variables for custom colors */
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-/* Dark mode color variables */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 25, 25, 25; /* Adjusted for a lighter shade of dark mode */
-    --background-end-rgb: 50, 50, 50;   /* Adjusted for a gradient in dark mode */
-  }
-}
-
 /* Global styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif; /* Apply default font */
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      rgba(var(--background-start-rgb), 1),
-      rgba(var(--background-end-rgb), 1)
-    );
-  @apply bg-gray-50 text-gray-900; /* Apply Tailwind's background and text colors */
+  color: rgb(0, 0, 0); /* Set text color to black */
+  background-color: white; /* Set background color to white */
+  @apply bg-white text-gray-900; /* Apply Tailwind's background and text colors */
   font-family: 'Inter', sans-serif; /* Override font with Inter from Tailwind */
 }
 
