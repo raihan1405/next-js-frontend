@@ -14,8 +14,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 25, 25, 25; /* Adjusted for a lighter shade of dark mode */
+    --background-end-rgb: 50, 50, 50;   /* Adjusted for a gradient in dark mode */
   }
 }
 
@@ -26,10 +26,9 @@ body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgba(var(--background-start-rgb), 1),
+      rgba(var(--background-end-rgb), 1)
+    );
   @apply bg-gray-50 text-gray-900; /* Apply Tailwind's background and text colors */
   font-family: 'Inter', sans-serif; /* Override font with Inter from Tailwind */
 }
@@ -43,7 +42,6 @@ h1, h2, h3, h4, h5, h6 {
 a {
   @apply text-teal-500 hover:text-teal-700; /* Style for links */
 }
-
 
 /* Input Styles */
 input[type="text"] {
