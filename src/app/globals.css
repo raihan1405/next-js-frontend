@@ -1,27 +1,117 @@
+/* Import Tailwind CSS base, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Variables for custom colors */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
 
+/* Dark mode color variables */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
+/* Global styles */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif; /* Apply default font */
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  @apply bg-gray-50 text-gray-900; /* Apply Tailwind's background and text colors */
+  font-family: 'Inter', sans-serif; /* Override font with Inter from Tailwind */
 }
 
+/* Custom Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold; /* Apply bold text to all headings */
+}
+
+/* Custom link styles */
+a {
+  @apply text-teal-500 hover:text-teal-700; /* Style for links */
+}
+
+
+/* Input Styles */
+input[type="text"] {
+  @apply w-full border border-gray-300 rounded p-2; /* Style text inputs */
+}
+
+/* Breadcrumb styles */
+nav ul {
+  @apply flex space-x-2 text-sm text-gray-600; /* Style for breadcrumb */
+}
+
+/* Button styles */
+button {
+   /* Style for buttons */
+}
+
+/* Custom Layout Styles */
+.main-content {
+  @apply p-10; /* Padding for main content */
+}
+
+/* Custom utility for text balance */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important; /* Hide elements with no-print class during print */
+  }
+
+  .print-only {
+    display: block !important; /* Show elements with print-only class only during print */
+  }
+
+  header {
+    display: none !important; /* Hide header during print */
+  }
+
+  nav {
+    padding: 0; /* Reduce padding on navigation during print */
+  }
+
+  body {
+    background-color: white;
+    color: black;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Simplify appearance for print */
+  * {
+    box-shadow: none !important;
+    background-image: none !important;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Keep grid layout during print */
+  }
+}
+
+/* Screen-specific styles */
+@media screen {
+  .print-only {
+    display: none !important; /* Hide print-only elements during normal screen usage */
   }
 }
