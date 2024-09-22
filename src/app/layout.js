@@ -17,12 +17,12 @@ export const metadata = {
   title: "PadiUMKM",
   description: "Beli barang dan jasa makin mudah dan praktis bersama Pasar Digital UMKM. Nikmati pengadaan barang dan jasa transparan, aman dan praktis!",
   icons: {
-    icon: ['/favicon.ico?=v4'],
-    apple: ['/apple-touch-icon.png?=v4'],
-    shortcut: ['/apple-touch-icon.png']
+    icon: '/favicon.ico', // Remove the query parameters
+    apple: '/apple-touch-icon.png', // Remove the query parameters
+    shortcut: '/apple-touch-icon.png'
   }
-
 };
+
 
 export default function RootLayout() {
   return (
