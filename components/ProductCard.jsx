@@ -43,7 +43,7 @@ const ProductCard = ({ product, index, handleCariProduk, handleHapusProduk, onAd
             {product ? (
                 <>
                     <div className="relative w-full h-50 p-4">
-                        <div className="relative w-full h-50 group"> {/* Tambahkan class 'group' pada elemen pembungkus gambar */}
+                        <div className="relative w-full h-50 group">
                             {/* Gambar Produk */}
                             <img
                                 src={product.productImage}
@@ -57,10 +57,6 @@ const ProductCard = ({ product, index, handleCariProduk, handleHapusProduk, onAd
                             </div>
                         </div>
                     </div>
-
-
-
-
 
 
                     {/* Product Information */}

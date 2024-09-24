@@ -51,45 +51,105 @@ button {
 }
 
 /* Print styles */
+/* Import Tailwind CSS base, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif; /* Apply default font */
+  color: rgb(0, 0, 0); /* Set text color to black */
+  background-color: white; /* Set background color to white */
+  @apply bg-white text-gray-900; /* Apply Tailwind's background and text colors */
+  font-family: 'Inter', sans-serif; /* Override font with Inter from Tailwind */
+}
+
+/* Custom Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold; /* Apply bold text to all headings */
+}
+
+/* Custom link styles */
+a {
+  @apply text-teal-500 hover:text-teal-700; /* Style for links */
+}
+
+/* Input Styles */
+input[type="text"] {
+  @apply w-full border border-gray-300 rounded p-2; /* Style text inputs */
+}
+
+/* Breadcrumb styles */
+nav ul {
+  @apply flex space-x-2 text-sm text-gray-600; /* Style for breadcrumb */
+}
+
+/* Button styles */
+button {
+   /* Style for buttons */
+}
+
+/* Custom Layout Styles */
+.main-content {
+  @apply p-10; /* Padding for main content */
+}
+
+/* Custom utility for text balance */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Print styles */
 @media print {
+  /* Sembunyikan elemen dengan kelas 'no-print' */
   .no-print {
-    display: none !important; /* Hide elements with no-print class during print */
+    display: none !important;
   }
 
-  .print-only {
-    display: block !important; /* Show elements with print-only class only during print */
+  /* Atur modal agar tampil penuh saat dicetak */
+  .print-modal {
+    position: static !important;
+    background: none !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    box-shadow: none !important;
   }
 
-  header {
-    display: none !important; /* Hide header during print */
+  /* Atur ulang gaya kontainer utama */
+  .print-modal .print-container {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
   }
 
-  nav {
-    padding: 0; /* Reduce padding on navigation during print */
-  }
-
+  /* Hilangkan margin dan padding body */
   body {
-    background-color: white;
-    color: black;
     margin: 0;
     padding: 0;
   }
 
-  /* Simplify appearance for print */
-  * {
-    box-shadow: none !important;
-    background-image: none !important;
+  /* Atur ukuran font jika diperlukan */
+  body, .print-modal {
+    font-size: 12pt;
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Keep grid layout during print */
+  /* Sesuaikan ukuran gambar */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Sesuaikan grid kolom saat cetak */
+  .print-modal .grid-cols-1 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 }
 
-/* Screen-specific styles */
-@media screen {
-  .print-only {
-    display: none !important; /* Hide print-only elements during normal screen usage */
-  }
-}
+
+
