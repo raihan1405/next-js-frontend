@@ -27,6 +27,14 @@ const PrintComparison = ({ onClose, products = [], renderStarAndRating }) => {
         {/* Header */}
         <h2 className="text-xl font-semibold mb-6">Perbandingan Produk</h2>
 
+        <div className="print-only">
+          <button
+            onClick={() => window.location.href = 'https://next-js-frontend-kappa.vercel.app/'}
+          >
+            Lanjutkan Perbandingan Disini
+          </button>
+        </div>
+
         <div className="flex flex-wrap">
           {/* Sidebar */}
           <div className="w-full lg:w-1/4 p-2">

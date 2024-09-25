@@ -151,5 +151,91 @@ button {
   }
 }
 
+@media print {
+  /* Sembunyikan elemen yang tidak diperlukan saat mencetak */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Modal harus muncul di mode cetak */
+  .print-modal {
+    position: static !important;
+    background: none !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+  }
+
+  /* Pastikan kontainer diatur secara proporsional */
+  .print-container {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  /* Tata letak grid untuk produk dalam mode cetak */
+  .flex-wrap {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 kolom */
+    gap: 16px; /* Tambahkan jarak antar kolom */
+  }
+
+  /* Sesuaikan ukuran gambar */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Sesuaikan border dan padding produk */
+  .product-card {
+    border: 1px solid #ddd !important;
+    padding: 16px !important;
+    page-break-inside: avoid; /* Hindari pemotongan antar halaman */
+  }
+
+  /* Hilangkan shadow pada modal saat dicetak */
+  .print-modal {
+    box-shadow: none !important;
+  }
+}
+
+
+/* CSS Global */
+
+/* Sembunyikan tombol dalam tampilan normal */
+.print-only {
+  display: none;
+}
+
+/* Tampilkan tombol saat mode cetak */
+@media print {
+  .print-only {
+    display: block !important;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* Desain tombol */
+  .print-only button {
+    background-color: #ffffff; /* Warna latar belakang sesuai gambar */
+    color: rgb(52, 212, 151);
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: rgb(52, 212, 151);
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan ringan */
+    transition: background-color 0.3s ease; /* Animasi transisi saat hover */
+
+  }
+
+  .print-only button:hover {
+    background-color: #17a589; /* Warna saat hover */
+  }
+}
+
 
 
