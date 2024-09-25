@@ -172,14 +172,16 @@ button {
     width: 100% !important;
     height: auto !important;
     overflow: visible !important;
-    padding: 0 !important;
+    padding: auto !important;
   }
 
   /* Tata letak grid untuk produk dalam mode cetak */
   .flex-wrap {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important; /* 3 kolom */
-    gap: 16px; /* Tambahkan jarak antar kolom */
+    gap: 6px; /* Tambahkan jarak antar kolom */
+    margin: 2px;
+    padding: 20px;
   }
 
   /* Sesuaikan ukuran gambar */
