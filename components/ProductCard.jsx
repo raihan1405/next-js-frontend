@@ -31,14 +31,16 @@ const ProductCard = ({ product, index, handleCariProduk, handleHapusProduk, onAd
         }
     };
 
-    // Logic to determine if it's a best product
-    const isBestProduct = product && product.price < 100000 && product.rating > 4.5;
+    // Logic to determine if it's a best product based only on the lowest price
+    const isBestProduct = product && parseFloat(product.price.replace('Rp', '').replace('.', '').trim()) < 50000;
+
+    // Debugging output to the console
+    console.log('Harga produk:', product.price);
+    console.log('Is Best Product:', isBestProduct);
 
     return (
-        <div
-            className={`bg-white shadow-md rounded-lg overflow-hidden w-full flex flex-col justify-between relative group ${isBestProduct ? 'border-4 border-cyan-500' : 'border border-gray-300'
-                }`}
-        >
+        <div className={`bg-white shadow-md rounded-lg overflow-hidden w-full flex flex-col justify-between relative group ${isBestProduct ? 'border-4 border-cyan-500' : 'border border-gray-300'}`}>
+
             {/* Conditionally render content based on whether the product exists */}
             {product ? (
                 <>
@@ -48,7 +50,7 @@ const ProductCard = ({ product, index, handleCariProduk, handleHapusProduk, onAd
                             <img
                                 src={product.productImage}
                                 alt={product.name}
-                                className="w-full h-50 object-cover rounded-md"
+                                className="w-full h-64 object-cover rounded-md"
                             />
 
                             {/* Overlay gradasi dan teks hanya sebesar gambar */}
@@ -74,10 +76,13 @@ const ProductCard = ({ product, index, handleCariProduk, handleHapusProduk, onAd
                             {product.name}
                         </h2>
 
+                        {/* Tetap tampilkan rating untuk semua produk */}
+                        <div className="flex items-center justify-between mb-4">
+                            {renderStarAndRating(product.ratingProduct)}
+                        </div>
+
                         {isBestProduct && (
                             <div className="flex items-center justify-between mb-4">
-                                {/* Rating */}
-                                {renderStarAndRating(product.rating)}
                                 {/* Discount / Promotion Badge */}
                                 <div className="bg-teal-500 text-white rounded-full px-3 py-1 text-xs font-semibold">
                                     Harga Terbaik!
@@ -179,13 +184,6 @@ const ProductCard = ({ product, index, handleCariProduk, handleHapusProduk, onAd
                         </div>
                     </div>
 
-                    {/* Add to Cart Modal */}
-                    {/* <AddToCartModal
-            open={isModalOpen}
-            handleClose={handleModalClose}
-            product={product}
-            onAddToCart={onAddToCart} // Pass the cart function to modal
-          /> */}
                 </>
             ) : (
                 // If product is null, show ProductCardZero
