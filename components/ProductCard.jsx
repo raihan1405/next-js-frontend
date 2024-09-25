@@ -34,10 +34,6 @@ const ProductCard = ({ product, index, handleCariProduk, handleHapusProduk, onAd
     // Logic to determine if it's a best product based only on the lowest price
     const isBestProduct = product && parseFloat(product.price.replace('Rp', '').replace('.', '').trim()) < 50000;
 
-    // Debugging output to the console
-    console.log('Harga produk:', product.price);
-    console.log('Is Best Product:', isBestProduct);
-
     return (
         <div className={`bg-white shadow-md rounded-lg overflow-hidden w-full flex flex-col justify-between relative group ${isBestProduct ? 'border-4 border-cyan-500' : 'border border-gray-300'}`}>
 
@@ -76,19 +72,18 @@ const ProductCard = ({ product, index, handleCariProduk, handleHapusProduk, onAd
                             {product.name}
                         </h2>
 
-                        {/* Tetap tampilkan rating untuk semua produk */}
-                        <div className="flex items-center justify-between mb-4">
-                            {renderStarAndRating(product.ratingProduct)}
-                        </div>
-
                         {isBestProduct && (
                             <div className="flex items-center justify-between mb-4">
+                                {/* Tetap tampilkan rating untuk semua produk */}
+                                <div className="flex items-center justify-between mb-4">
+                                    {renderStarAndRating(product.ratingProduct)}
+                                </div>
                                 {/* Discount / Promotion Badge */}
-                                <div className="bg-teal-500 text-white rounded-full px-3 py-1 text-xs font-semibold">
+                                <div className="bg-teal-500 text-white rounded-full px-4 py-2 text-xs font-semibold">
                                     Harga Terbaik!
                                 </div>
-                                <span className="absolute -top-3 right-2 bg-cyan-500 text-white text-xs font-bold px-3 py-5 rounded-lg z-10">
-                                    Most Popular
+                                <span className="absolute -top-3 right-2 bg-cyan-500 text-white text-xs font-bold px-32 py-4 rounded-lg z-10">
+                                    Best Product
                                 </span>
                             </div>
                         )}
