@@ -157,3 +157,4 @@ const ProductSearchModal = ({ onClose, onSelectProduct }) => {
 };
 
 export default ProductSearchModal;
+ 

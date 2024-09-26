@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaTrashAlt, FaShoppingCart, FaStar, FaStarHalfAlt, FaInfoCircle } from 'react-icons/fa';
+import { FaTrashAlt, FaShoppingCart, FaInfoCircle } from 'react-icons/fa';
 
 function SideBar() {
   return (
@@ -35,13 +35,12 @@ function SideBar() {
         {/* Grid for displaying product details */}
         <div className="grid grid-cols-1 gap-2 mt-6 text-sm text-gray-600">
           {/* Harga */}
-          <div></div>
-          <div className="flex items-center">
+          <div className="flex items-center relative group">
             <span className="font-semibold">Harga</span>
           </div>
 
           {/* Dikirim dari */}
-          <div className="flex items-center">
+          <div className="flex items-center relative group">
             <span className="font-semibold">Dikirim dari</span>
           </div>
 
@@ -50,8 +49,8 @@ function SideBar() {
             <span className="font-semibold">Rating</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
             {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
-              Menampilkan peringkat berdasarkan ulasan pelanggan.
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
+              Menampilkan peringkat berdasarkan ulasan pelanggan yang telah membeli produk ini.
             </div>
           </div>
 
@@ -60,8 +59,8 @@ function SideBar() {
             <span className="font-semibold">Terjual</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
             {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
-              Menampilkan jumlah total unit yang terjual.
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
+              Menampilkan jumlah total unit yang terjual sejak produk ini diluncurkan.
             </div>
           </div>
 
@@ -70,19 +69,14 @@ function SideBar() {
             <span className="font-semibold">Pajak</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
             {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
-              Menunjukkan apakah harga sudah termasuk pajak (jika berlaku).
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
+              Menunjukkan apakah harga sudah termasuk pajak (jika berlaku) berdasarkan lokasi pengiriman.
             </div>
           </div>
 
           {/* TKDN */}
-          <div className="flex items-center group">
+          <div className="flex items-center relative group">
             <span className="font-semibold">TKDN</span>
-            <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
-              Persentase konten lokal yang digunakan dalam produk.
-            </div>
           </div>
 
           <hr className="my-3 border-gray-300 w-full" />
@@ -103,11 +97,11 @@ function SideBar() {
           </div>
 
           {/* Min Pembelian */}
-          <div className="flex items-center group">
+          <div className="flex items-center relative group">
             <span className="font-semibold">Min Pembelian</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
             {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Jumlah minimum yang diperlukan untuk melakukan pemesanan.
             </div>
           </div>
@@ -118,11 +112,11 @@ function SideBar() {
           </div>
 
           {/* Dimensi Ukuran */}
-          <div className="flex items-center group">
+          <div className="flex items-center relative group">
             <span className="font-semibold">Dimensi Ukuran</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
             {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Memberikan dimensi produk untuk pertimbangan kesesuaian dan pengiriman.
             </div>
           </div>
@@ -134,32 +128,36 @@ function SideBar() {
             <span className="font-semibold">Penjual</span>
           </div>
 
-          {/* BUMN Pengampu */}
-          <div className="flex items-center group">
-            <span className="font-semibold">BUMN Pengampu</span>
+          <div className="flex items-center relative group">
+            <span className="font-semibold">Pajak</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
             {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
-              Nama Badan Usaha Milik Negara(BUMN) yang mengawasi atau mendukung produk.
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
+              Menunjukkan apakah harga sudah termasuk pajak (jika berlaku) berdasarkan lokasi pengiriman.
             </div>
           </div>
 
+          {/* BUMN Pengampu */}
+          <div className="flex items-center relative group">
+            <span className="font-semibold">BUMN Pengampu</span>
+          </div>
+
           {/* Rating dan ulasan */}
-          <div className="flex items-center group">
+          <div className="flex items-center relative group">
             <span className="font-semibold">Rating & Ulasan</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
             {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
-              Berisikan ulasan produk.
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
+              Berisikan ulasan produk yang telah diberikan oleh pelanggan.
             </div>
           </div>
 
           {/* Total Penjualan */}
-          <div className="flex items-center group">
-            <span className="font-semibold">Total Penjualan per Tahun</span>
+          <div className="flex items-center relative group">
+            <span className="font-semibold">Total Penjualan</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
             {/* Tooltip muncul saat di-hover */}
-            <div className="hidden group-hover:inline-block mt-2 ml-4 p-2 text-xs bg-teal-500 text-white rounded w-max">
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Jumlah kumulatif penjualan dalam setahun yang dilakukan untuk produk tersebut.
             </div>
           </div>
@@ -176,4 +174,4 @@ function SideBar() {
   );
 }
 
-export default SideBar
+export default SideBar;
