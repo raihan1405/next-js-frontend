@@ -20,6 +20,8 @@ function SideBar() {
           }}>
           </h2>
         </div>
+
+        {/* Hidden Button Section */}
         <div className="flex items-center justify-between mt-4 invisible">
           <button className="flex items-center justify-center bg-white text-teal-500 border border-teal-500 rounded-md p-2 hover:bg-teal-500 hover:text-white transition">
             <FaTrashAlt className="mr-2" />
@@ -30,13 +32,15 @@ function SideBar() {
         </div>
 
         {/* Horizontal Line */}
+        <hr className="my-4 border-gray-300" />
 
-        <hr className="my-18 border-gray-300" />
         {/* Grid for displaying product details */}
         <div className="grid grid-cols-1 gap-2 mt-6 text-sm text-gray-600">
+
           {/* Harga */}
           <div className="flex items-center relative group">
             <span className="font-semibold">Harga</span>
+           
           </div>
 
           {/* Dikirim dari */}
@@ -48,7 +52,6 @@ function SideBar() {
           <div className="flex items-center relative group">
             <span className="font-semibold">Rating</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
             <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Menampilkan peringkat berdasarkan ulasan pelanggan yang telah membeli produk ini.
             </div>
@@ -58,7 +61,6 @@ function SideBar() {
           <div className="flex items-center relative group">
             <span className="font-semibold">Terjual</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
             <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Menampilkan jumlah total unit yang terjual sejak produk ini diluncurkan.
             </div>
@@ -68,7 +70,6 @@ function SideBar() {
           <div className="flex items-center relative group">
             <span className="font-semibold">Pajak</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
             <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Menunjukkan apakah harga sudah termasuk pajak (jika berlaku) berdasarkan lokasi pengiriman.
             </div>
@@ -77,8 +78,13 @@ function SideBar() {
           {/* TKDN */}
           <div className="flex items-center relative group">
             <span className="font-semibold">TKDN</span>
+            <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
+            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
+              Persentase konten lokal yang digunakan dalam produk.
+            </div>
           </div>
 
+          {/* Horizontal Line */}
           <hr className="my-3 border-gray-300 w-full" />
 
           {/* Stok */}
@@ -99,11 +105,6 @@ function SideBar() {
           {/* Min Pembelian */}
           <div className="flex items-center relative group">
             <span className="font-semibold">Min Pembelian</span>
-            <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
-            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
-              Jumlah minimum yang diperlukan untuk melakukan pemesanan.
-            </div>
           </div>
 
           {/* Berat Satuan */}
@@ -114,11 +115,6 @@ function SideBar() {
           {/* Dimensi Ukuran */}
           <div className="flex items-center relative group">
             <span className="font-semibold">Dimensi Ukuran</span>
-            <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
-            <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
-              Memberikan dimensi produk untuk pertimbangan kesesuaian dan pengiriman.
-            </div>
           </div>
 
           <hr className="my-3 border-gray-300 w-full" />
@@ -128,10 +124,10 @@ function SideBar() {
             <span className="font-semibold">Penjual</span>
           </div>
 
+          
           <div className="flex items-center relative group">
             <span className="font-semibold">Pajak</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
             <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Menunjukkan apakah harga sudah termasuk pajak (jika berlaku) berdasarkan lokasi pengiriman.
             </div>
@@ -142,11 +138,12 @@ function SideBar() {
             <span className="font-semibold">BUMN Pengampu</span>
           </div>
 
-          {/* Rating dan ulasan */}
+
+
+          {/* Rating & Ulasan */}
           <div className="flex items-center relative group">
             <span className="font-semibold">Rating & Ulasan</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
             <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Berisikan ulasan produk yang telah diberikan oleh pelanggan.
             </div>
@@ -156,12 +153,12 @@ function SideBar() {
           <div className="flex items-center relative group">
             <span className="font-semibold">Total Penjualan</span>
             <FaInfoCircle className="text-teal-500 ml-2 cursor-pointer" />
-            {/* Tooltip muncul saat di-hover */}
             <div className="absolute hidden group-hover:block mt-2 p-2 text-xs bg-teal-500 text-white rounded z-50 max-w-xs" style={{ whiteSpace: 'normal' }}>
               Jumlah kumulatif penjualan dalam setahun yang dilakukan untuk produk tersebut.
             </div>
           </div>
 
+          {/* Horizontal Line */}
           <hr className="my-3 border-gray-300 w-full" />
 
           {/* Deskripsi */}

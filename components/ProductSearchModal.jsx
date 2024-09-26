@@ -1,18 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import ProductSearch from './ProductSearch'; // Import komponen ProductSearch
-import Pagination from './Pagination'; // Import komponen Pagination
+import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import icon untuk sidebar button
+import ProductSearch from './ProductSearch';
+import Pagination from './Pagination';
 
 const ProductSearchModal = ({ onClose, onSelectProduct }) => {
-    const [searchQuery, setSearchQuery] = useState(""); // State untuk melacak query pencarian
-    const [debouncedQuery, setDebouncedQuery] = useState(searchQuery); // Query yang sudah di-debounce
-    const [suggestions, setSuggestions] = useState([]); // State untuk menyimpan suggestion dari API
-    const [isSuggestionVisible, setIsSuggestionVisible] = useState(false); // State untuk mengontrol tampilan suggestions
-    const [currentPage, setCurrentPage] = useState(1); // State untuk melacak halaman saat ini
-    const totalPages = 10; // Ganti dengan jumlah halaman sebenarnya
-    const inputRef = useRef(null); // Referensi untuk input search bar
+    const [searchQuery, setSearchQuery] = useState("");
+    const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
+    const [suggestions, setSuggestions] = useState([]);
+    const [isSuggestionVisible, setIsSuggestionVisible] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
+    const [isFilterOpen, setIsFilterOpen] = useState(false); // State untuk membuka/menutup filter di mobile
+    const [priceRange, setPriceRange] = useState([0, 1000000]); // Tambahkan state untuk priceRange
+    const [locationFilter, setLocationFilter] = useState(""); // Tambahkan state untuk locationFilter
+    const [ratingFilter, setRatingFilter] = useState(""); // Tambahkan state untuk ratingFilter
+    const itemsPerPage = 10;
 
-    // Fungsi untuk mengambil suggestion dari API
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const inputRef = useRef(null);
+
+    // Fungsi untuk mengambil suggestion
     const fetchSuggestions = async (keyword) => {
         if (keyword.trim() !== "") {
             try {
@@ -21,55 +28,48 @@ const ProductSearchModal = ({ onClose, onSelectProduct }) => {
                     throw new Error("Gagal mengambil suggestion");
                 }
                 const data = await response.json();
-                setSuggestions(data); // Simpan hasil suggestion di state
-                setIsSuggestionVisible(true); // Tampilkan suggestions
+                setSuggestions(data);
+                setIsSuggestionVisible(true);
             } catch (error) {
                 console.error(error);
             }
         } else {
-            setSuggestions([]); // Kosongkan suggestion jika tidak ada keyword
-            setIsSuggestionVisible(false); // Sembunyikan suggestions jika tidak ada keyword
+            setSuggestions([]);
+            setIsSuggestionVisible(false);
         }
     };
 
-    // Debouncing untuk query search
     useEffect(() => {
-        // Set timeout untuk menunda pemanggilan API
         const handler = setTimeout(() => {
-            setDebouncedQuery(searchQuery); // Perbarui query yang di-debounce setelah delay
-        }, 500); // Tunggu 500ms sebelum memperbarui debounced query
+            setDebouncedQuery(searchQuery);
+        }, 500);
 
-        // Bersihkan timeout jika pengguna mengetik ulang sebelum 500ms
         return () => {
             clearTimeout(handler);
         };
-    }, [searchQuery]); // Efek ini berjalan setiap kali searchQuery berubah
+    }, [searchQuery]);
 
-    // Fetch suggestion hanya jika debouncedQuery berubah
     useEffect(() => {
         if (debouncedQuery) {
             fetchSuggestions(debouncedQuery);
         }
-    }, [debouncedQuery]); // Panggil API hanya ketika debouncedQuery berubah
+    }, [debouncedQuery]);
 
-    // Handle input search bar dan ambil suggestion
     const handleSearch = (e) => {
         const value = e.target.value;
-        setSearchQuery(value); // Perbarui state searchQuery
+        setSearchQuery(value);
     };
 
-    // Ketika pengguna memilih suggestion
     const handleSuggestionClick = (suggestion) => {
-        setSearchQuery(suggestion); // Set query dengan suggestion yang dipilih
-        setSuggestions([]); // Kosongkan suggestion setelah dipilih
-        setIsSuggestionVisible(false); // Sembunyikan suggestions setelah dipilih
+        setSearchQuery(suggestion);
+        setSuggestions([]);
+        setIsSuggestionVisible(false);
     };
 
-    // Handle klik di luar search bar
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (inputRef.current && !inputRef.current.contains(event.target)) {
-                setIsSuggestionVisible(false); // Sembunyikan suggestions jika klik di luar
+                setIsSuggestionVisible(false);
             }
         };
 
@@ -79,22 +79,20 @@ const ProductSearchModal = ({ onClose, onSelectProduct }) => {
         };
     }, []);
 
-    // Fungsi untuk menampilkan suggestions ketika input difokuskan
     const handleFocus = () => {
         if (suggestions.length > 0) {
-            setIsSuggestionVisible(true); // Tampilkan suggestions saat input difokuskan
+            setIsSuggestionVisible(true);
         }
     };
 
-    // Fungsi untuk menangani pemilihan produk
     const handleSelectProduct = (product) => {
-        onSelectProduct(product);  // Tambahkan produk yang dipilih melalui fungsi prop
-        onClose();  // Tutup modal setelah menambahkan produk
+        onSelectProduct(product);
+        onClose();
     };
 
     return (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white rounded-lg shadow-lg p-6 w-3/4 max-w-4xl">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] sm:w-[85%] lg:w-[80%] max-w-6xl h-[600px] overflow-y-auto relative">
                 {/* Header dengan Kotak Pencarian */}
                 <div className="flex justify-between items-center mb-6 relative">
                     <div className="flex-1 max-w-lg relative" ref={inputRef}>
@@ -102,8 +100,8 @@ const ProductSearchModal = ({ onClose, onSelectProduct }) => {
                             type="text"
                             placeholder="Cari produk, jasa, atau vendor"
                             value={searchQuery}
-                            onChange={handleSearch} // Perbarui query pencarian saat input berubah
-                            onFocus={handleFocus} // Tampilkan suggestions saat input difokuskan
+                            onChange={handleSearch}
+                            onFocus={handleFocus}
                             className="w-full border border-gray-300 rounded-full py-2 px-4 pl-6 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -113,30 +111,186 @@ const ProductSearchModal = ({ onClose, onSelectProduct }) => {
                         {/* Tampilkan suggestions */}
                         {isSuggestionVisible && suggestions.length > 0 && (
                             <ul className="absolute z-10 bg-white border border-gray-300 w-full mt-1 rounded-lg shadow-lg max-h-48 overflow-y-auto">
-                                {suggestions.map((suggestion, index) => (
+                                {suggestions.map((suggestion) => (
                                     <li
-                                        key={suggestion._id} // Menggunakan _id sebagai key
+                                        key={suggestion._id}
                                         className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                                        onClick={() => handleSuggestionClick(suggestion.name)} // Memilih nama produk
+                                        onClick={() => handleSuggestionClick(suggestion.name)}
                                     >
-                                        {suggestion.name} {/* Menampilkan nama produk */}
+                                        {suggestion.name}
                                     </li>
                                 ))}
                             </ul>
                         )}
                     </div>
+
+                    {/* Tombol Filter di mobile */}
+                    <button
+                        className="block lg:hidden bg-blue-500 text-white p-2 rounded-full"
+                        onClick={() => setIsFilterOpen(true)} // Tampilkan filter ketika tombol ditekan
+                    >
+                        <FaBars />
+                    </button>
                 </div>
 
-                {/* Komponen ProductSearch dengan Pagination */}
-                <ProductSearch
-                    searchQuery={debouncedQuery}
-                    currentPage={currentPage} // Pass halaman saat ini ke ProductSearch
-                    onAddProduct={handleSelectProduct} // Pass handler untuk menambahkan produk yang dipilih
-                />
+                {/* Filter Sidebar di mobile (di dalam modal) */}
+                <div
+                    className={`fixed top-0 right-0 w-3/4 sm:w-1/4 bg-white h-full z-50 transform transition-transform duration-300 ${isFilterOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden`}
+                >
+                    <button
+                        onClick={() => setIsFilterOpen(false)}
+                        className="text-gray-700 font-bold px-4 py-2"
+                    >
+                        <FaTimes className="mr-2" /> Tutup Filter
+                    </button>
+                    <div className="p-4">
+                        <h2 className="font-bold mb-4">Sortir Produk</h2>
+
+                        {/* Radio Button Pilihan Harga */}
+                        <div className="mb-6">
+                            <label className="block text-gray-700">Harga</label>
+                            <div>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="harga"
+                                        value="termurah"
+                                        className="mr-2"
+                                        onChange={() => setPriceRange([0, 500000])}
+                                    />
+                                    Termurah
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="harga"
+                                        value="termahal"
+                                        className="mr-2"
+                                        onChange={() => setPriceRange([500000, 1000000])}
+                                    />
+                                    Termahal
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* Filter Lokasi */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Dikirim dari</label>
+                            <select
+                                value={locationFilter}
+                                onChange={e => setLocationFilter(e.target.value)}
+                                className="w-full border rounded p-2"
+                            >
+                                <option value="">Semua Lokasi</option>
+                                <option value="Kota Surabaya">Kota Surabaya</option>
+                                <option value="Jakarta Timur">Jakarta Timur</option>
+                                <option value="Bandung">Bandung</option>
+                            </select>
+                        </div>
+
+                        {/* Filter Rating */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Rating</label>
+                            <select
+                                value={ratingFilter}
+                                onChange={e => setRatingFilter(e.target.value)}
+                                className="w-full border rounded p-2"
+                            >
+                                <option value="">Pilih Rating</option>
+                                <option value="4">4 ke atas</option>
+                                <option value="3">3 ke atas</option>
+                                <option value="2">2 ke atas</option>
+                                <option value="1">1 ke atas</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ProductSearch dengan Pagination */}
+                <div className="lg:flex lg:flex-row">
+                    {/* Sidebar Filter untuk Desktop */}
+                    <div className="hidden lg:block w-1/4 p-3">
+                        <h2 className="font-bold mb-4">Sortir Produk</h2>
+
+                        {/* Radio Button Pilihan Harga */}
+                        <div className="mb-6">
+                            <label className="block text-gray-700">Harga</label>
+                            <div>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="harga"
+                                        value="termurah"
+                                        className="mr-2"
+                                        onChange={() => setPriceRange([0, 500000])}
+                                    />
+                                    Termurah
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="harga"
+                                        value="termahal"
+                                        className="mr-2"
+                                        onChange={() => setPriceRange([500000, 1000000])}
+                                    />
+                                    Termahal
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* Filter Lokasi */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Dikirim dari</label>
+                            <select
+                                value={locationFilter}
+                                onChange={e => setLocationFilter(e.target.value)}
+                                className="w-full border rounded p-2"
+                            >
+                                <option value="">Semua Lokasi</option>
+                                <option value="Kota Surabaya">Kota Surabaya</option>
+                                <option value="Jakarta Timur">Jakarta Timur</option>
+                                <option value="Bandung">Bandung</option>
+                            </select>
+                        </div>
+
+                        {/* Filter Rating */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Rating</label>
+                            <select
+                                value={ratingFilter}
+                                onChange={e => setRatingFilter(e.target.value)}
+                                className="w-full border rounded p-2"
+                            >
+                                <option value="">Pilih Rating</option>
+                                <option value="4">4 ke atas</option>
+                                <option value="3">3 ke atas</option>
+                                <option value="2">2 ke atas</option>
+                                <option value="1">1 ke atas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Bagian untuk Produk */}
+                    <div className="w-full lg:w-3/4 h-[420px] ">
+                        <ProductSearch
+                            searchQuery={debouncedQuery}
+                            currentPage={currentPage}
+                            onAddProduct={handleSelectProduct}
+                            setCurrentPage={setCurrentPage}
+                            setTotalItems={setTotalItems}
+                        />
+                    </div>
+
+
+                </div>
 
                 {/* Pagination dan Tombol Tutup */}
-                <div className="flex justify-between items-center mt-6">
-                    {/* Tombol Tutup */}
+                <div className="flex justify-between items-center mt-2">
                     <button
                         onClick={onClose}
                         className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-200"
@@ -144,11 +298,10 @@ const ProductSearchModal = ({ onClose, onSelectProduct }) => {
                         Tutup
                     </button>
 
-                    {/* Pagination */}
                     <Pagination
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
-                        totalPages={totalPages} // Pass total halaman ke Pagination
+                        totalPages={totalPages}
                     />
                 </div>
             </div>
@@ -157,4 +310,3 @@ const ProductSearchModal = ({ onClose, onSelectProduct }) => {
 };
 
 export default ProductSearchModal;
- 
